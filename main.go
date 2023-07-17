@@ -11,10 +11,10 @@ import (
 	"sync"
 	"unsafe"
 
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot"
-	"github.com/librespot-org/librespot-golang/librespot/core"
-	"github.com/librespot-org/librespot-golang/librespot/utils"
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot"
+	"github.com/gapidobri/librespot-golang/librespot/core"
+	"github.com/gapidobri/librespot-golang/librespot/utils"
 	"github.com/xlab/portaudio-go/portaudio"
 	"github.com/xlab/vorbis-go/decoder"
 )
@@ -51,14 +51,13 @@ func main() {
 		// Authenticate using a regular login and password, and store it in the blob file.
 		session, err = librespot.Login(*username, *password, *devicename)
 
-		err := ioutil.WriteFile(*blob, session.ReusableAuthBlob(), 0600)
+		err := ioutil.WriteFile(*blob, session.ReusableAuthBlob(), 0o600)
 		if err != nil {
 			fmt.Printf("Could not store authentication blob in blob.bin: %s\n", err)
 		}
 	} else if *blob != "" && *username != "" {
 		// Authenticate reusing an existing blob
 		blobBytes, err := ioutil.ReadFile(*blob)
-
 		if err != nil {
 			fmt.Printf("Unable to read auth blob from %s: %s\n", *blob, err)
 			os.Exit(1)
@@ -192,7 +191,6 @@ func funcArtist(session *core.Session, artistID string) {
 			fmt.Printf(" => %s\n", utils.ConvertTo62(a.GetGid()))
 		}
 	}
-
 }
 
 func funcAlbum(session *core.Session, albumID string) {
@@ -222,7 +220,6 @@ func funcAlbum(session *core.Session, albumID string) {
 			fmt.Printf(" => %s\n", utils.ConvertTo62(track.GetGid()))
 		}
 	}
-
 }
 
 func funcPlaylists(session *core.Session) {
@@ -253,7 +250,6 @@ func funcPlaylists(session *core.Session) {
 
 func funcSearch(session *core.Session, keyword string) {
 	resp, err := session.Mercury().Search(keyword, 12, session.Country(), session.Username())
-
 	if err != nil {
 		fmt.Println("Failed to search:", err)
 		return
@@ -356,7 +352,6 @@ func funcPlay(session *core.Session, trackID string) {
 // PortAudio helpers
 func paError(err portaudio.Error) bool {
 	return portaudio.ErrorCode(err) != portaudio.PaNoError
-
 }
 
 func paErrorText(err portaudio.Error) string {
@@ -366,8 +361,8 @@ func paErrorText(err portaudio.Error) string {
 func paCallback(wg *sync.WaitGroup, channels int, samples <-chan [][]float32) portaudio.StreamCallback {
 	wg.Add(1)
 	return func(_ unsafe.Pointer, output unsafe.Pointer, sampleCount uint,
-		_ *portaudio.StreamCallbackTimeInfo, _ portaudio.StreamCallbackFlags, _ unsafe.Pointer) int32 {
-
+		_ *portaudio.StreamCallbackTimeInfo, _ portaudio.StreamCallbackFlags, _ unsafe.Pointer,
+	) int32 {
 		const (
 			statusContinue = int32(portaudio.PaContinue)
 			statusComplete = int32(portaudio.PaComplete)

@@ -3,15 +3,16 @@ package core
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/golang/protobuf/proto"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/connection"
-	"github.com/librespot-org/librespot-golang/librespot/crypto"
-	"github.com/librespot-org/librespot-golang/librespot/mercury"
-	"github.com/librespot-org/librespot-golang/librespot/spirc"
 	"io"
 	"math/big"
 	"testing"
+
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/connection"
+	"github.com/gapidobri/librespot-golang/librespot/crypto"
+	"github.com/gapidobri/librespot-golang/librespot/mercury"
+	"github.com/gapidobri/librespot-golang/librespot/spirc"
+	"github.com/golang/protobuf/proto"
 )
 
 type shanPacket struct {
@@ -112,7 +113,7 @@ func TestLogin(t *testing.T) {
 
 	serverResponseData, _ := proto.Marshal(serverResponse)
 	binary.Write(conn.reader, binary.BigEndian, uint32(len(serverResponseData)+4))
-	//Write initial server response to plain connection
+	// Write initial server response to plain connection
 	conn.reader.Write(serverResponseData)
 
 	result := make(chan []byte, 2)
@@ -124,7 +125,7 @@ func TestLogin(t *testing.T) {
 		result <- s.reusableAuthBlob
 	}()
 
-	//Get the login packet sent to the spotify server from spotcontrol
+	// Get the login packet sent to the spotify server from spotcontrol
 	loginPacket := <-fakeShan.sendPackets
 	clientResponse := &Spotify.ClientResponseEncrypted{}
 	proto.Unmarshal(loginPacket.buf, clientResponse)
@@ -182,7 +183,7 @@ func TestHello(t *testing.T) {
 
 	go controller.SendHello()
 
-	//ignore subscribe packet
+	// ignore subscribe packet
 	<-stream.sendPackets
 
 	packet := <-stream.sendPackets

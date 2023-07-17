@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/connection"
-	"github.com/librespot-org/librespot-golang/librespot/mercury"
 	"log"
 	"sync"
+
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/connection"
+	"github.com/gapidobri/librespot-golang/librespot/mercury"
 )
 
 type Player struct {

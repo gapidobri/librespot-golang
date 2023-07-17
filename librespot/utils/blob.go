@@ -10,11 +10,12 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"errors"
-	"github.com/librespot-org/librespot-golang/librespot/crypto"
-	"golang.org/x/crypto/pbkdf2"
 	"log"
 	"math/big"
 	"os"
+
+	"github.com/gapidobri/librespot-golang/librespot/crypto"
+	"golang.org/x/crypto/pbkdf2"
 )
 
 // BlobInfo is the structure holding authentication blob data. The blob is an encoded/encrypted byte array (encoded
@@ -44,8 +45,8 @@ func BlobFromFile(path string) (BlobInfo, error) {
 
 // NewBlobInfo creates a new BlobInfo structure with the blob data filled in DecodedBlob field
 func NewBlobInfo(blob64 string, client64 string,
-	keys crypto.PrivateKeys, deviceId string, username string) (BlobInfo, error) {
-
+	keys crypto.PrivateKeys, deviceId string, username string,
+) (BlobInfo, error) {
 	partDecoded, err := decodeBlob(blob64, client64, keys)
 	if err != nil {
 		return BlobInfo{}, err
@@ -157,7 +158,6 @@ func encryptBlob(blob []byte, key []byte) []byte {
 }
 
 func decodeBlob(blob64 string, client64 string, keys crypto.PrivateKeys) (string, error) {
-
 	clientKey, err := base64.StdEncoding.DecodeString(client64)
 	if err != nil {
 		return "", err

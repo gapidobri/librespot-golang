@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/golang/protobuf/proto"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/connection"
 	"io"
 	"sync"
+
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/connection"
+	"github.com/golang/protobuf/proto"
 )
 
 // Mercury is the protocol implementation for Spotify Connect playback control and metadata fetching.It works as a
@@ -279,7 +280,6 @@ func (m *Client) Handle(cmd uint8, reader io.Reader) (err error) {
 		}
 	}
 	return
-
 }
 
 func (m *Internal) parseResponse(cmd uint8, reader io.Reader) (response *Response, err error) {
@@ -295,7 +295,7 @@ func (m *Internal) parseResponse(cmd uint8, reader io.Reader) (response *Respons
 	if !ok && cmd == 0xb5 {
 		pending = Pending{}
 	} else if !ok {
-		//log.Print("ignoring seq ", SeqKey)
+		// log.Print("ignoring seq ", SeqKey)
 	}
 
 	for i := uint16(0); i < count; i++ {
@@ -341,7 +341,6 @@ func (m *Internal) completeRequest(cmd uint8, pending Pending, seqKey string) (r
 		StatusCode: header.GetStatusCode(),
 		SeqKey:     seqKey,
 	}, nil
-
 }
 
 func parsePart(reader io.Reader) ([]byte, error) {

@@ -5,18 +5,19 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/badfortrains/mdns"
 	"log"
 	"math/rand"
+	"net"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"sync"
 
-	"github.com/librespot-org/librespot-golang/librespot/crypto"
-	"github.com/librespot-org/librespot-golang/librespot/utils"
-	"net"
+	"github.com/badfortrains/mdns"
+
+	"github.com/gapidobri/librespot-golang/librespot/crypto"
+	"github.com/gapidobri/librespot-golang/librespot/utils"
 )
 
 // connectInfo stores the information about Spotify Connect connection
@@ -232,7 +233,7 @@ func findCpath(info []string) string {
 }
 
 func (d *Discovery) handleAddUser(r *http.Request) error {
-	//already have login info, ignore
+	// already have login info, ignore
 	if d.loginBlob.Username != "" {
 		return nil
 	}

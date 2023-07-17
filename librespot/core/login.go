@@ -4,16 +4,19 @@ import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
-	"github.com/golang/protobuf/proto"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/connection"
-	"github.com/librespot-org/librespot-golang/librespot/discovery"
-	"github.com/librespot-org/librespot-golang/librespot/utils"
 	"log"
+
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/connection"
+	"github.com/gapidobri/librespot-golang/librespot/discovery"
+	"github.com/gapidobri/librespot-golang/librespot/utils"
+	"github.com/golang/protobuf/proto"
 )
 
-var Version = "master"
-var BuildID = "dev"
+var (
+	Version = "master"
+	BuildID = "dev"
+)
 
 // Login to Spotify using username and password
 func Login(username string, password string, deviceName string) (*Session, error) {
@@ -179,7 +182,8 @@ func makeLoginPasswordPacket(username string, password string, deviceId string) 
 }
 
 func makeLoginBlobPacket(username string, authData []byte,
-	authType *Spotify.AuthenticationType, deviceId string) []byte {
+	authType *Spotify.AuthenticationType, deviceId string,
+) []byte {
 	versionString := "librespot-golang_" + Version + "_" + BuildID
 
 	packet := &Spotify.ClientResponseEncrypted{

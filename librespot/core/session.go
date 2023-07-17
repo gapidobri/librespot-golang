@@ -8,14 +8,14 @@ import (
 	"net"
 	"time"
 
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/connection"
+	"github.com/gapidobri/librespot-golang/librespot/crypto"
+	"github.com/gapidobri/librespot-golang/librespot/discovery"
+	"github.com/gapidobri/librespot-golang/librespot/mercury"
+	"github.com/gapidobri/librespot-golang/librespot/player"
+	"github.com/gapidobri/librespot-golang/librespot/utils"
 	"github.com/golang/protobuf/proto"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/connection"
-	"github.com/librespot-org/librespot-golang/librespot/crypto"
-	"github.com/librespot-org/librespot-golang/librespot/discovery"
-	"github.com/librespot-org/librespot-golang/librespot/mercury"
-	"github.com/librespot-org/librespot-golang/librespot/player"
-	"github.com/librespot-org/librespot-golang/librespot/utils"
 )
 
 // Session represents an active Spotify connection
@@ -248,7 +248,7 @@ func (s *Session) runPollLoop() {
 }
 
 func (s *Session) handle(cmd uint8, data []byte) {
-	//fmt.Printf("handle, cmd=0x%x data=%x\n", cmd, data)
+	// fmt.Printf("handle, cmd=0x%x data=%x\n", cmd, data)
 
 	switch {
 	case cmd == connection.PacketPing:
@@ -334,7 +334,8 @@ func makeHelloMessage(publicKey []byte, nonce []byte) []byte {
 			Version:  proto.Uint64(0x10800000000),
 		},
 		CryptosuitesSupported: []Spotify.Cryptosuite{
-			Spotify.Cryptosuite_CRYPTO_SUITE_SHANNON},
+			Spotify.Cryptosuite_CRYPTO_SUITE_SHANNON,
+		},
 		LoginCryptoHello: &Spotify.LoginCryptoHelloUnion{
 			DiffieHellman: &Spotify.LoginCryptoDiffieHellmanHello{
 				Gc:              publicKey,

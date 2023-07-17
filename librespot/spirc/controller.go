@@ -3,13 +3,14 @@ package spirc
 import (
 	"errors"
 	"fmt"
-	"github.com/golang/protobuf/proto"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/core"
-	"github.com/librespot-org/librespot-golang/librespot/mercury"
-	"github.com/librespot-org/librespot-golang/librespot/utils"
 	"strings"
 	"sync"
+
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/core"
+	"github.com/gapidobri/librespot-golang/librespot/mercury"
+	"github.com/gapidobri/librespot-golang/librespot/utils"
+	"github.com/golang/protobuf/proto"
 )
 
 // Controller is a structure for Spotify Connect remote control interface.
@@ -248,5 +249,4 @@ func (c *Controller) run(ch chan mercury.Response) {
 		)
 
 	}
-
 }

@@ -6,16 +6,19 @@ import (
 	"crypto/cipher"
 	"encoding/binary"
 	"fmt"
-	"github.com/librespot-org/librespot-golang/Spotify"
-	"github.com/librespot-org/librespot-golang/librespot/connection"
 	"io"
 	"math"
 	"sync"
+
+	"github.com/gapidobri/librespot-golang/Spotify"
+	"github.com/gapidobri/librespot-golang/librespot/connection"
 )
 
-const kChunkSize = 32768 // In number of words (so actual byte size is kChunkSize*4, aka. kChunkByteSize)
-const kChunkByteSize = kChunkSize * 4
-const kOggSkipBytes = 167 // Number of bytes to skip at the beginning of the file
+const (
+	kChunkSize     = 32768 // In number of words (so actual byte size is kChunkSize*4, aka. kChunkByteSize)
+	kChunkByteSize = kChunkSize * 4
+	kOggSkipBytes  = 167 // Number of bytes to skip at the beginning of the file
+)
 
 // min helper function for integers
 func min(a, b int) int {
@@ -252,7 +255,6 @@ func (a *AudioFile) loadChunk(chunkIndex int) error {
 	chunkOffsetStart := uint32(chunkIndex * kChunkSize)
 	chunkOffsetEnd := uint32((chunkIndex + 1) * kChunkSize)
 	err := a.player.stream.SendPacket(connection.PacketStreamChunk, buildAudioChunkRequest(channel.num, a.fileId, chunkOffsetStart, chunkOffsetEnd))
-
 	if err != nil {
 		return err
 	}
@@ -278,7 +280,6 @@ func (a *AudioFile) loadChunk(chunkIndex int) error {
 	a.putEncryptedChunk(chunkIndex, chunkData[0:chunkSz])
 
 	return nil
-
 }
 
 func (a *AudioFile) loadNextChunk() {
@@ -366,5 +367,4 @@ func (a *AudioFile) onChannelData(channel *Channel, data []byte) uint16 {
 
 		return 0
 	}
-
 }

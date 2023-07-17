@@ -1,6 +1,6 @@
 package librespotmobile
 
-import "github.com/librespot-org/librespot-golang/librespot/core"
+import "github.com/gapidobri/librespot-golang/librespot/core"
 
 // MobileSession exposes a simplified subset of the core.Session struct that is compatible with the subset
 // of types accepted by gomobile. Most calls are proxied to the underlying core.Session pointer, which we
@@ -13,7 +13,6 @@ type MobileSession struct {
 
 func Login(username string, password string, deviceName string) (*MobileSession, error) {
 	sess, err := core.Login(username, password, deviceName)
-
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +22,6 @@ func Login(username string, password string, deviceName string) (*MobileSession,
 
 func LoginSaved(username string, authData []byte, deviceName string) (*MobileSession, error) {
 	sess, err := core.LoginSaved(username, authData, deviceName)
-
 	if err != nil {
 		return nil, err
 	}

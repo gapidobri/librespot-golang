@@ -2,8 +2,9 @@ package librespotmobile
 
 import (
 	"encoding/json"
-	"github.com/librespot-org/librespot-golang/librespot/core"
-	"github.com/librespot-org/librespot-golang/librespot/mercury"
+
+	"github.com/gapidobri/librespot-golang/librespot/core"
+	"github.com/gapidobri/librespot-golang/librespot/mercury"
 )
 
 type MobileMercury struct {
